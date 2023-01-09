@@ -5,11 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}pakodemyproject
     build:
       context: .
-      dockerfile: PakodemyProject/Dockerfile
-    ports:
-        - "80:80"
-    depends_on:
-        - db 
+      dockerfile: PakodemyProject\Dockerfile
 
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"

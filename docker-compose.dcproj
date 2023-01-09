@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Windows</DockerTargetOS>
-    <ProjectGuid>0252b0d9-f957-4dfb-90f3-0dd4b7bf3a74</ProjectGuid>
+    <ProjectGuid>eb1bf68f-3dc7-43c9-82dc-50816daefeef</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>pakodemyproject</DockerServiceName>
