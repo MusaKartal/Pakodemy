@@ -35,8 +35,8 @@ namespace PakodemyProject.Controllers
             }
             else
             {
-                var cache = await _humanService.CacheList(name);              
-                return Ok(cache);
+                await _humanService.CacheList(name);              
+               
             }
 
             return Ok(checkName);        
