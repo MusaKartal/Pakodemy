@@ -1,4 +1,5 @@
 ﻿using EntitiesLayer;
+using EntitiesLayer.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace BusinessLayer.Abstract
     {
 
         Task<Human> GetByName(string name);
-        
-        IList<Human> GetAll();
+        Task<List<HumanListDto>> CacheList(string key);
+        Task<Human> GetByAgifyName(string name);
+        Task Create(Human entitiy);
     }
 }

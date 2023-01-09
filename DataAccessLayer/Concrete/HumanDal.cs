@@ -1,5 +1,7 @@
-﻿using DataAccessLayer.Abstract;
+﻿using AutoMapper;
+using DataAccessLayer.Abstract;
 using EntitiesLayer;
+using EntitiesLayer.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,9 +15,10 @@ namespace DataAccessLayer.Concrete
     public class HumanDal : IHumanDal
     {
         private readonly DataContext _context;
-
-        public HumanDal(DataContext context)
+        private readonly IMapper _mapper;
+        public HumanDal(DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -25,12 +28,18 @@ namespace DataAccessLayer.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public IList<Human> GetAll()
+        public async Task<List<HumanListDto>> GetAll()
         {
-            return _context.Set<Human>().ToList();
+            var toList = await _context.Set<Human>().ToListAsync();
+            var dto = _mapper.Map<List<HumanListDto>>(toList);
+            return dto;
         }
 
-        
+        public Human GetByAge(int age)
+        {
+            return _context.Set<Human>().AsNoTracking().FirstOrDefault(n => n.Age == age);
+        }
+
         public Human GetByName(string name)
         {
             return _context.Set<Human>().AsNoTracking().FirstOrDefault(n=> n.Name == name);

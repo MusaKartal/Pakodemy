@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pakodemyproject:
+    image: ${DOCKER_REGISTRY-}pakodemyproject
+    build:
+      context: .
+      dockerfile: PakodemyProject/Dockerfile

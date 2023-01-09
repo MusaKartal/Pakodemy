@@ -1,4 +1,5 @@
 ﻿using EntitiesLayer;
+using EntitiesLayer.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace DataAccessLayer.Abstract
     public interface IHumanDal 
     {
         Human GetByName(string name);
+        Human GetByAge(int age);
         Task Create(Human entity);
-        IList<Human> GetAll();
+        Task <List<HumanListDto>> GetAll();
+
     }
 }
