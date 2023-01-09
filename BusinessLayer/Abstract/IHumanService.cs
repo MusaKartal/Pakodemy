@@ -11,9 +11,10 @@ namespace BusinessLayer.Abstract
     public interface IHumanService
     {
 
-        Task<Human> GetByName(string name);
-        Task<List<HumanListDto>> CacheList(string key);
-        Task<Human> GetByAgifyName(string name);
+        Task<HumanDto> GetByName(string name);
+        Task<List<CacheDto>> CacheList(string key);
+        Task<HumanDto> GetByAgifyName(string name);
         Task Create(Human entitiy);
+        Task<List<ResponsetwoDto>> GetAllResponsetwo();
     }
 }

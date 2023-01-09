@@ -36,7 +36,7 @@ namespace BusinessLayer.Concrete
         }
 
 
-        private int StageOfLife(int value)
+        private async Task<int> StageOfLife(int value)
         {
             if (value >= 0 && value <= 6)
             {
@@ -71,32 +71,88 @@ namespace BusinessLayer.Concrete
             return value;
         }
 
-        public async Task<List<HumanListDto>> CacheList(string key)
+        private async Task<string> StageOfLifeChangeString(int stageOfLifeValue)
+        {
+            var value = await StageOfLife(stageOfLifeValue);
+            if (value == 1)
+            {
+                return "infantia";
+            }
+            if  (value == 2)
+            {
+                return "pueritia";
+            }
+            if (value == 3)
+            {
+                return "adolescentia";
+            }
+            if (value == 4)
+            {
+                return "iuventus";
+            }
+            if (value == 5)
+            {
+                return "gravitas";
+            }
+            if (value == 6)
+            {
+                return "senectus";
+            }
+
+
+            return "";
+        }
+
+        public async Task<List<CacheDto>> CacheList(string key)
         {
             var cache = await _cacheService.GetAsync(key);
             return cache;
         }
 
 
-        public async Task<Human> GetByAgifyName(string name)
+        public async Task<HumanDto> GetByAgifyName(string name)
         {
-            var newName = await _agifyService.GetByName(name);         
-                            
+            var newName = await _agifyService.GetByName(name);
+            newName.StageOfLife = await StageOfLifeChangeString(newName.Age);
+            newName.IsSystemCheck = false;
+            Human entitiy = new Human();
+            entitiy.Name = newName.Name;
+            entitiy.Age = newName.Age;
+            entitiy.Count= newName.Count;
+            entitiy.AverageAge = newName.AverageAge;
+            await Create(entitiy);
             return newName;
         }
 
         public async Task Create(Human entitiy)
         {
-            entitiy.StageOfLife = StageOfLife(entitiy.Age);
+            entitiy.StageOfLife = await StageOfLife(entitiy.Age);
             await _humanDal.Create(entitiy);
         } 
 
-        public async Task<Human> GetByName(string name)
-        {
-            var humanValue = _humanDal.GetByName(name);                  
+        public async Task<HumanDto> GetByName(string name)
+        {          
+            var humanValue = _humanDal.GetByName(name);
+            if (humanValue != null)
+            {
+                humanValue.StageOfLife = await StageOfLifeChangeString(humanValue.Age);
+                humanValue.IsSystemCheck = true;
+            }
+           
             return humanValue;
         }
 
-
+        public async Task<List<ResponsetwoDto>> GetAllResponsetwo()
+        {
+            var getAll = await _humanDal.GetAllResponsetwo();
+            List<ResponsetwoDto> values = new List<ResponsetwoDto>();
+            foreach (var responsetwo in getAll)
+            {
+                responsetwo.StageOfLife = await StageOfLifeChangeString(responsetwo.Age);
+                values.Add(responsetwo);
+            }
+            
+            return values;
+        }
     }
 }

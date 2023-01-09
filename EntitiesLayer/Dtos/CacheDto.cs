@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntitiesLayer.Dtos
 {
-    public class HumanListDto
+    public class CacheDto
     {
         public int Age { get; set; }
     }

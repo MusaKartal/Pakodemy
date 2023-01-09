@@ -24,23 +24,23 @@ namespace BusinessLayer.Concrete
             _distributedCache = distributedCache;
           
         }
-        public async Task<List<HumanListDto>> GetAsync(string key)
+        public async Task<List<CacheDto>> GetAsync(string key)
         {
             var cacheKey = key;
             string serializedHumanList;
-            var customerList = new List<HumanListDto>();
+            var humanList = new List<CacheDto>();
             
             var redisHumanList = await _distributedCache.GetAsync(cacheKey);
             if (redisHumanList != null)
             {
                 serializedHumanList = Encoding.UTF8.GetString(redisHumanList);
-                customerList = JsonConvert.DeserializeObject<List<HumanListDto>>(serializedHumanList);
+                humanList = JsonConvert.DeserializeObject<List<CacheDto>>(serializedHumanList);
             }
             else
             {
-                customerList = await _humanDal.GetAll();
+                humanList = await _humanDal.GetAll();
                 // yaş ortalaması çekilecek
-                serializedHumanList = JsonConvert.SerializeObject(customerList);
+                serializedHumanList = JsonConvert.SerializeObject(humanList);
                 redisHumanList = Encoding.UTF8.GetBytes(serializedHumanList);
                 var options = new DistributedCacheEntryOptions()
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
@@ -48,7 +48,7 @@ namespace BusinessLayer.Concrete
                 await _distributedCache.SetAsync(cacheKey, redisHumanList, options);
                 
             }
-            return customerList;
+            return humanList;
         }
     }
 }

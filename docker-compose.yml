@@ -6,3 +6,22 @@ services:
     build:
       context: .
       dockerfile: PakodemyProject/Dockerfile
+    ports:
+        - "80:80"
+    depends_on:
+        - db 
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sql_server2022
+    ports:
+          - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1Secure*Password1
+
+  redis_image:
+        image: redis
+        container_name: cache
+        ports:
+            - "6379:6379"  

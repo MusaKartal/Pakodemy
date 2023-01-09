@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,21 +29,30 @@ namespace DataAccessLayer.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<HumanListDto>> GetAll()
+        public async Task<List<CacheDto>>GetAll()
+        {
+            var toList = await _context.Set<Human>().ToListAsync();            
+            var dto =  _mapper.Map<List<CacheDto>>(toList);
+            return dto;
+        }
+
+        public async Task<List<ResponsetwoDto>> GetAllResponsetwo()
         {
             var toList = await _context.Set<Human>().ToListAsync();
-            var dto = _mapper.Map<List<HumanListDto>>(toList);
+            var dto = _mapper.Map<List<ResponsetwoDto>>(toList);
             return dto;
         }
 
         public Human GetByAge(int age)
         {
             return _context.Set<Human>().AsNoTracking().FirstOrDefault(n => n.Age == age);
-        }
+        }    
 
-        public Human GetByName(string name)
+        public HumanDto GetByName(string name)
         {
-            return _context.Set<Human>().AsNoTracking().FirstOrDefault(n=> n.Name == name);
+           var humanGetByName= _context.Set<Human>().AsNoTracking().FirstOrDefault(n => n.Name == name);
+            var dto = _mapper.Map<HumanDto>(humanGetByName);
+            return dto;
         }
     }
 }

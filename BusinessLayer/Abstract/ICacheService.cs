@@ -10,6 +10,6 @@ namespace BusinessLayer.Abstract
 {
     public interface ICacheService
     {
-        Task<List<HumanListDto>> GetAsync(string key);
+        Task<List<CacheDto>> GetAsync(string key); 
     }
 }

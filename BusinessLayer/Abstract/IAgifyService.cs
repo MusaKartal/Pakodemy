@@ -1,4 +1,5 @@
 ﻿using EntitiesLayer;
+using EntitiesLayer.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IAgifyService
     {
-        public Task<Human> GetByName(string name);
+        public Task<HumanDto> GetByName(string name);
 
     }
 }

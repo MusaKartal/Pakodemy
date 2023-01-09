@@ -13,8 +13,9 @@ namespace BusinessLayer
     {
         public MapperInitilizer()
         {
-            CreateMap<Human, HumanListDto>().ReverseMap();
+            CreateMap<Human, CacheDto>().ReverseMap();
             CreateMap<Human, HumanDto>().ReverseMap();
+            CreateMap<Human, ResponsetwoDto>().ReverseMap();
         }
     }
 }

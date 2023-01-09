@@ -10,10 +10,10 @@ namespace DataAccessLayer.Abstract
 {
     public interface IHumanDal 
     {
-        Human GetByName(string name);
+        HumanDto GetByName(string name);   
         Human GetByAge(int age);
         Task Create(Human entity);
-        Task <List<HumanListDto>> GetAll();
-
+        Task<List<CacheDto>> GetAll();
+        Task<List<ResponsetwoDto>> GetAllResponsetwo();
     }
 }

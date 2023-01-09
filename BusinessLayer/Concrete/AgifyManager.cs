@@ -2,6 +2,7 @@
 using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntitiesLayer;
+using EntitiesLayer.Dtos;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace BusinessLayer.Concrete
     public class AgifyManager : IAgifyService
     {
        
-        public async Task<Human> GetByName(string name)
+        public async Task<HumanDto> GetByName(string name)
         {
             var url = "https://api.agify.io/?name="+name;
             var client = new HttpClient();
             var response = await client.GetAsync(url);
            
 
-            return await response.Content.ReadFromJsonAsync<Human>() ;
+            return await response.Content.ReadFromJsonAsync<HumanDto>() ;
         }
 
        

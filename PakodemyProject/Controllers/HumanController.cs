@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using EntitiesLayer;
+using EntitiesLayer.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -24,22 +25,29 @@ namespace PakodemyProject.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public async Task<ActionResult<Human>> AllProject(string name) 
+        public async Task<ActionResult<HumanDto>> AllProject(string name) 
         {
            var checkName = await _humanService.GetByName(name);
             if (checkName == null)
             {
                 checkName = await _humanService.GetByAgifyName(name);
-                await _humanService.Create(checkName);
                 
             }
             else
             {
-                var cache = await _humanService.CacheList(name);
+                var cache = await _humanService.CacheList(name);              
                 return Ok(cache);
             }
-            
+
             return Ok(checkName);        
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ResponsetwoDto>>> GetAll()
+        {
+           var humanList = await _humanService.GetAllResponsetwo();
+
+            return Ok(humanList);
         }
      
     }

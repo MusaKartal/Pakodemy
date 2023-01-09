@@ -8,7 +8,11 @@ namespace EntitiesLayer.Dtos
 {
     public class HumanDto
     {
-        public int StageOfLife { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int Count { get; set; }
+        public string StageOfLife { get; set; }
         public int AverageAge { get; set; }
+        public bool IsSystemCheck { get; set;}
     }
 }
