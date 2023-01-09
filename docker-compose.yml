@@ -16,6 +16,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=1Secure*Password1
 
+
   redis_image:
         image: redis
         container_name: cache
